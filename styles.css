@@ -1,0 +1,475 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,500;0,600;1,500;1,600&display=swap');
+
+/* ========================================
+   1. CONFIGURACIÓN GENERAL
+======================================== */
+
+:root {
+    --red: #ff3158;
+    --green: #7cf0a0;
+    --ink: #030605;
+    --muted: #789084;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+
+    background:
+        radial-gradient(
+            ellipse at 50% 42%,
+            #172019 0%,
+            #080d09 43%,
+            #020403 100%
+        );
+
+    color: #f7eee9;
+    font-family: 'DM Mono', monospace;
+}
+
+
+/* ========================================
+   2. FONDO DE PARTÍCULAS
+======================================== */
+
+#stars {
+    position: fixed;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    pointer-events: none;
+    z-index: 0;
+}
+
+
+/* ========================================
+   3. CONTENEDOR PRINCIPAL
+======================================== */
+
+.scene {
+    position: relative;
+    z-index: 1;
+
+    width: min(100%, 850px);
+    min-height: 100vh;
+
+    margin: auto;
+    padding: 25px 22px 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+/* ========================================
+   4. INDICADOR SUPERIOR
+======================================== */
+
+.topline {
+    align-self: flex-end;
+
+    color: #d9a4ae;
+    font-size: 11px;
+    letter-spacing: .12em;
+
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+.live-dot {
+    width: 7px;
+    height: 7px;
+
+    border-radius: 50%;
+
+    background: #ff7891;
+    box-shadow: 0 0 12px #ff416a;
+}
+
+
+/* ========================================
+   5. PRESENTACIÓN
+======================================== */
+
+.intro {
+    text-align: center;
+
+    margin: 35px 0 0;
+
+    transition:
+        opacity .8s,
+        transform .8s;
+}
+
+.eyebrow {
+    font-size: 10px;
+    letter-spacing: .28em;
+
+    color: #d58b9b;
+}
+
+.intro h1 {
+    font:
+        500 clamp(34px, 7vw, 54px)/1.12
+        'Playfair Display', serif;
+
+    margin: 15px 0 25px;
+}
+
+.intro h1 em {
+    color: #ff8298;
+}
+
+
+/* ========================================
+   6. BOTONES
+======================================== */
+
+.bloom-button,
+.again-button {
+    border: 1px solid #a84a60;
+
+    background: #291019;
+    color: #ffe9ed;
+
+    padding: 13px 22px;
+    border-radius: 30px;
+
+    font: 12px 'DM Mono', monospace;
+
+    cursor: pointer;
+
+    transition: .3s;
+}
+
+.bloom-button:hover,
+.again-button:hover {
+    background: #60152b;
+
+    box-shadow:
+        0 0 25px #ff315855,
+        0 0 50px #ff315822;
+
+    transform: translateY(-3px);
+}
+
+.bloom-button span {
+    color: #ff8298;
+    margin-left: 8px;
+}
+
+.music-button {
+    display: block;
+
+    margin: 13px auto 0;
+
+    border: 1px solid #526d5c;
+    background: #0c1711;
+
+    color: #c7e8d0;
+
+    padding: 10px 16px;
+    border-radius: 24px;
+
+    font: 10px 'DM Mono', monospace;
+
+    cursor: pointer;
+    transition: .3s;
+}
+
+.music-button:hover,
+.music-button.playing {
+    border-color: #ff8298;
+    color: #ffd8df;
+
+    box-shadow: 0 0 18px #ff315833;
+}
+
+
+/* ========================================
+   7. ESCENARIO DE LA ROSA
+======================================== */
+
+.flower-stage {
+    position: relative;
+
+    width: min(100%, 580px);
+
+    height: clamp(420px, 65vw, 570px);
+
+    margin: 0 auto;
+
+    display: grid;
+    place-items: center;
+}
+
+.flower-stage svg {
+    position: relative;
+    z-index: 2;
+
+    width: 100%;
+    height: 100%;
+
+    overflow: visible;
+}
+
+
+/* Luz detrás de la rosa */
+
+.halo {
+    position: absolute;
+
+    width: 65%;
+    aspect-ratio: 1;
+
+    border-radius: 50%;
+
+    background:
+        radial-gradient(
+            circle,
+            #ff17452b 0%,
+            #a5003018 45%,
+            transparent 75%
+        );
+
+    filter: blur(45px);
+
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+
+/* Iluminación inferior */
+
+.under-glow {
+    position: absolute;
+
+    bottom: 5%;
+
+    width: 48%;
+    height: 20px;
+
+    background: #ff3158;
+
+    filter: blur(35px);
+
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+
+/* ========================================
+   8. TALLO Y HOJAS
+======================================== */
+
+#stemGroup {
+    opacity: 0;
+    transition: opacity 2s ease;
+}
+
+
+/* ========================================
+   9. PÉTALOS
+======================================== */
+
+#petals {
+    filter: url(#glow);
+}
+
+#petals path {
+    stroke-linejoin: round;
+    stroke-linecap: round;
+}
+
+
+/* ========================================
+   10. CARTA ROMÁNTICA
+======================================== */
+
+.letter {
+    width: min(100%, 560px);
+
+    text-align: center;
+
+    margin: 10px auto 20px;
+    padding: 28px 25px;
+
+    border: 1px solid #7a354566;
+    border-radius: 8px;
+
+    background:
+        linear-gradient(
+            145deg,
+            #1b0b12e8,
+            #090b09ed
+        );
+
+    box-shadow:
+        0 15px 50px #0007,
+        0 0 35px #ff315810;
+
+    opacity: 0;
+    visibility: hidden;
+
+    transform: translateY(25px);
+
+    max-height: 0;
+    overflow: hidden;
+
+    transition:
+        opacity 1s,
+        transform 1s,
+        max-height 1s,
+        padding 1s,
+        visibility 1s;
+}
+
+.letter.show {
+    opacity: 1;
+    visibility: visible;
+
+    transform: translateY(0);
+
+    max-height: 600px;
+}
+
+.letter h2 {
+    font:
+        600 clamp(24px, 5vw, 34px)
+        'Playfair Display', serif;
+
+    color: #ffd8df;
+
+    margin: 12px 0 18px;
+}
+
+.letter > p:not(.eyebrow):not(.signature) {
+    font:
+        14px/1.9
+        'Playfair Display', serif;
+
+    color: #e5cbd0;
+}
+
+.signature {
+    font:
+        italic 20px
+        'Playfair Display', serif;
+
+    color: #ff9bad;
+}
+
+.signature span {
+    color: #ff4569;
+}
+
+.again-button {
+    margin-top: 12px;
+    font-size: 10px;
+}
+
+
+/* ========================================
+   11. PIE DE PÁGINA
+======================================== */
+
+footer {
+    margin-top: auto;
+    padding-top: 30px;
+
+    color: #718277;
+
+    font-size: 9px;
+    letter-spacing: .15em;
+
+    text-align: center;
+}
+
+
+/* ========================================
+   12. ESTADO DE ANIMACIÓN
+======================================== */
+
+.blooming .intro {
+    opacity: .8;
+    transform: translateY(-8px);
+}
+
+.blooming .halo,
+.blooming .under-glow {
+    opacity: 1;
+}
+
+
+/* ========================================
+   13. RESPONSIVE - CELULARES
+======================================== */
+
+@media (max-width: 600px) {
+
+    .scene {
+        padding: 20px 15px 25px;
+    }
+
+    .intro {
+        margin-top: 28px;
+    }
+
+    .intro h1 {
+        font-size: clamp(30px, 9vw, 42px);
+    }
+
+    .flower-stage {
+        height: 430px;
+        margin: 0 auto;
+    }
+
+    .letter {
+        padding: 23px 17px;
+    }
+
+    .letter.show {
+        max-height: 650px;
+    }
+
+    footer {
+        font-size: 8px;
+        line-height: 1.8;
+    }
+}
+
+
+/* ========================================
+   14. REDUCIR MOVIMIENTOS
+======================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
+
+
+.bloom-button:disabled { opacity: .5; cursor: default; transform: none; }
+.again-button:focus-visible, .bloom-button:focus-visible, .music-button:focus-visible { outline: 2px solid #ff8298; outline-offset: 3px; }

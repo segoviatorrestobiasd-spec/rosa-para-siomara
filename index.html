@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <meta name="theme-color" content="#030605">
+
+  <meta name="description" content="Una rosa digital creada especialmente para Siomara, con mucho amor.">
+
+  <title>Una rosa para Mi Cielito ❤️</title>
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🌹</text></svg>">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+  <!-- Fondo de partículas -->
+  <canvas id="stars" aria-hidden="true"></canvas>
+
+  <main class="scene">
+
+    <!-- Indicador de animación -->
+    <div class="topline">
+      <span class="live-dot"></span>
+      <span id="timer">t 00.00s</span>
+      
+    </div>
+
+    <!-- Presentación -->
+    <header class="intro" id="intro">
+
+      <p class="eyebrow">
+        HECHA CON CARIÑO · PARA SIOMARA
+      </p>
+
+      <h1>
+        Siomara, hay algo que quiero
+        <br>
+        <em>mostrarte...</em>
+      </h1>
+
+      <button id="bloomButton" class="bloom-button">
+        Haz florecer tu rosa <span>✦</span>
+      </button>
+
+      <button id="musicButton" class="music-button" type="button" aria-pressed="false">
+        ♫ Activar música romántica
+      </button>
+
+    </header>
+
+
+    <!-- Escenario de la rosa -->
+    <section class="flower-stage" aria-label="Una rosa roja floreciendo">
+
+      <div class="halo"></div>
+
+      <svg id="rose" viewBox="0 0 500 620" role="img" aria-label="Rosa roja animada">
+
+        <defs>
+
+          <!-- Color de los pétalos -->
+          <linearGradient id="petal" x1="0" y1="0" x2="1" y2="1">
+
+            <stop offset="0%" stop-color="#ffb0bd" />
+            <stop offset="35%" stop-color="#f52b50" />
+            <stop offset="100%" stop-color="#650018" />
+
+          </linearGradient>
+
+          <!-- Color de las hojas -->
+          <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1">
+
+            <stop offset="0%" stop-color="#a7ffb5" />
+            <stop offset="50%" stop-color="#15964d" />
+            <stop offset="100%" stop-color="#06391f" />
+
+          </linearGradient>
+
+          <!-- Luz de los pétalos -->
+          <filter id="glow">
+
+            <feGaussianBlur stdDeviation="4" result="blur" />
+
+            <feMerge>
+              <feMergeNode in="blur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+
+          </filter>
+
+        </defs>
+
+
+        <!-- Tallo y hojas -->
+        <g id="stemGroup" opacity="0">
+
+          <!-- Tallo -->
+          <path d="M250 260
+                        C247 350 260 430 250 555" fill="none" stroke="#238c50" stroke-width="9"
+            stroke-linecap="round" />
+
+          <!-- Hoja izquierda -->
+          <path d="M251 405
+                        C190 350 140 370 125 420
+                        C180 435 224 425 251 405Z" fill="url(#leaf)" stroke="#75e99b" stroke-width="2" />
+
+          <!-- Hoja derecha -->
+          <path d="M252 465
+                        C310 408 360 423 375 470
+                        C320 493 278 483 252 465Z" fill="url(#leaf)" stroke="#75e99b" stroke-width="2" />
+
+          <!-- Nervaduras -->
+          <path d="M130 420 Q190 400 250 405
+                        M375 470 Q310 447 252 465" fill="none" stroke="#c4ffd0" stroke-opacity=".5" stroke-width="2" />
+
+        </g>
+
+
+        <!-- Aquí JavaScript dibuja los pétalos -->
+        <g id="petals" filter="url(#glow)"></g>
+
+      </svg>
+
+      <div class="under-glow"></div>
+
+    </section>
+
+
+    <!-- Carta personalizada -->
+    <section class="letter" id="letter" aria-live="polite">
+
+      <p class="eyebrow">
+        UNA ROSA PARA TI
+      </p>
+
+      <h2 id="letterTitle">
+        Para Siomara ❤️
+      </h2>
+
+      <p id="letterText">
+        Quiero que sepas lo especial que eres para mí.
+        Cada día a tu lado es un regalo y, aunque esta
+        rosa sea digital, representa una pequeña parte
+        de todo el amor que siento por ti.
+      </p>
+
+      <p class="signature">
+        Tu gordito bello <span>♥</span>
+      </p>
+
+      <button id="againButton" class="again-button">
+        Volver a verla florecer ↻
+      </button>
+
+    </section>
+
+
+    <!-- Pie de página -->
+    <footer>
+      CREADO CON ♥ · UN DETALLE PARA SIOMARA
+    </footer>
+
+  </main>
+
+
+  <!-- JavaScript -->
+ <script src="script.js" defer></script>
+  <noscript>Activa JavaScript para ver la rosa 🌹</noscript>
+
+</body>
+
+</html>
